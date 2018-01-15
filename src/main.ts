@@ -1,6 +1,7 @@
 import {NestFactory} from '@nestjs/core';
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
 import {ApplicationModule} from './app.module';
+import {ValidationPipe} from './common/pipes/validation.pipe';
 
 async function bootstrap() {
     const app = await NestFactory.create(ApplicationModule);
@@ -17,6 +18,11 @@ async function bootstrap() {
         .build();
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('/api', app, document);
+    app.useGlobalPipes(new ValidationPipe());
+    log4js.configure({
+        appenders: {cheese: {type: 'file', filename: 'cheese.log'}},
+        categories: {default: {appenders: ['cheese'], level: 'error'}}
+    });
     await app.listen(3000);
 }
 

@@ -1,17 +1,23 @@
-import {Controller, Get, HttpCode, HttpStatus, Post} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Post} from '@nestjs/common';
 import {AuthService} from './auth.service';
-import {ApiResponse} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiResponse, ApiUseTags} from '@nestjs/swagger';
+
+interface AuthUserDto {
+}
 
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {
     }
 
-    @Post('token')
-    @ApiResponse({status: 201, description: 'The record has been successfully created.'})
-    @ApiResponse({status: 403, description: 'Forbidden.'})
+    @Post('')
+    @ApiResponse({status: 200, description: 'The user has been successfully authenticated.'})
+    @ApiResponse({status: 404, description: 'User not found.'})
+    @ApiResponse({status: 400, description: 'Bad parameter.'})
     @HttpCode(HttpStatus.OK)
-    public async getToken() {
+    @ApiBearerAuth()
+    @ApiUseTags('Security')
+    public async authenticate(@Body() createCatDto: AuthUserDto) {
         return await this.authService.createToken();
     }
 

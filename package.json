@@ -18,6 +18,7 @@
     "@nestjs/websockets": "^4.4.0",
     "iridium": "^7.2.5",
     "jsonwebtoken": "^8.1.0",
+    "log4js": "^2.4.1",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1",
     "redis": "^2.7.1",
