@@ -1,5 +1,5 @@
 import {IsString} from 'class-validator';
-import {ApiModelProperty} from "@nestjs/swagger";
+import {ApiModelProperty, ApiModelPropertyOptional} from "@nestjs/swagger";
 
 export class CreateUserDto {
     @ApiModelProperty({type: String})
@@ -14,8 +14,8 @@ export class CreateUserDto {
     @IsString()
     readonly name: string;
 
-    @ApiModelProperty({type: Date, required: false})
-    readonly birthDate: Date;
+    @ApiModelPropertyOptional({type: String})
+    readonly birthDate: String;
 
     @ApiModelProperty({type: String})
     @IsString()

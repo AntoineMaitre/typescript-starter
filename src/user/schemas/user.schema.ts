@@ -24,7 +24,7 @@ export const UserSchema = new mongoose.Schema({
     lastname: {type: String, required: false},
     username: {type: String, required: false},
     avatar: {type: String, required: false},
-    birthDate: {type: Date, required: false},
+    birthDate: {type: String, required: false},
     email: {type: String, required: true},
     password: {type: String, required: false},
     // address: {type: [{type: Schema.ObjectId, ref: 'Address'}], required: false},

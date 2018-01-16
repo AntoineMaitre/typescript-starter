@@ -10,7 +10,7 @@ export interface User extends Document {
     readonly lastname: string;
     readonly username: string;
     readonly avatar: string;
-    readonly birthDate: Date;
+    readonly birthDate: string;
     readonly email: string;
     readonly password: string;
     // address:  [ Schema.ObjectId; ref: 'Address'}];
