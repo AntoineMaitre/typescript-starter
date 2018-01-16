@@ -6,6 +6,7 @@ import {UserService} from './user.service';
 import {User} from './interfaces/user.interface';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiUseTags} from '@nestjs/swagger';
 import {CreateUserDto} from './dto/create-user.dto';
+import {Param} from '@nestjs/common/utils/decorators/route-params.decorator';
 
 @ApiUseTags('User')
 @Controller('user')
@@ -37,5 +38,15 @@ export class UserController {
     @HttpCode(HttpStatus.OK)
     async findAll(): Promise<User[]> {
         return await this.userService.findAll();
+    }
+
+    @Get('getUserById/:id')
+    async findById(@Param('id') id: string): Promise<User> {
+        return this.userService.findById(id);
+    }
+
+    @Get('GetUserByUsername/:username')
+    async findByPlatform(@Param('username') username: string): Promise<User[]> {
+        return this.userService.findByUsername(username);
     }
 }

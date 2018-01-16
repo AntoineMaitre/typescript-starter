@@ -29,8 +29,8 @@ export class GameController {
         return this.gameService.findByPlatformType(type);
     }
 
-    @Post()
+    /* @Post()
     async create(@Body() createGameDto: CreateGameDto) {
         return this.gameService.create(createGameDto);
-    }
+    }*/
 }
