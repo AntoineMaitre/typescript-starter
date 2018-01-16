@@ -1,9 +1,9 @@
 /**
  * Created by tdoret on 15/01/2018.
  */
-import { IsString, IsInt, IsBoolean } from 'class-validator';
-import { ApiModelProperty } from '@nestjs/swagger';
-import {PlatformType} from '../../Platform/interfaces/platform.interface';
+import {IsBoolean, IsInt, IsString} from 'class-validator';
+import {ApiModelProperty} from '@nestjs/swagger';
+import {PlatformType} from '../../platform/interfaces/platform.interface';
 
 export class CreateGameDto {
     @IsString()

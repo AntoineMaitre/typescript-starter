@@ -1,10 +1,10 @@
 /**
  * Created by tdoret on 15/01/2018.
  */
-import { Document } from 'mongoose';
-import {PlatformType} from '../../Platform/interfaces/platform.interface';
+import {Document} from 'mongoose';
+import {PlatformType} from '../../platform/interfaces/platform.interface';
 
-export interface Game extends Document {
+export interface IGame extends Document {
     readonly name: string;
     readonly platform_type: PlatformType;
     readonly releaseDate: Date;

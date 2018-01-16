@@ -1,18 +1,18 @@
 /**
  * Created by tdoret on 15/01/2018.
  */
-import { Document } from 'mongoose';
-import {User} from '../../User/interfaces/user.interface';
-import {Game} from '../../Game/interfaces/game.interface';
+import {Document} from 'mongoose';
+import {IUser} from '../../User/interfaces/user.interface';
+import {IGame} from '../../game/interfaces/game.interface';
 
-export interface Event extends Document {
-    readonly owner: User;
+export interface IEvent extends Document {
+    readonly owner: IUser;
     readonly access_type: string;
     readonly event_type: string;
-    readonly participants: User[];
+    readonly participants: IUser[];
     readonly participants_limit: number;
-    readonly game: Game;
-    readonly winner: User;
+    readonly game: IGame;
+    readonly winner: IUser;
     // TODO price
     readonly start_date: Date;
     readonly end_date: Date;

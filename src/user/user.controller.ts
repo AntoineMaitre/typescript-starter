@@ -3,7 +3,7 @@
  */
 import {Body, Controller, Get, HttpCode, HttpStatus, Post} from '@nestjs/common';
 import {UserService} from './user.service';
-import {User} from './interfaces/user.interface';
+import {IUser} from './interfaces/user.interface';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiUseTags} from '@nestjs/swagger';
 import {CreateUserDto} from './dto/create-user.dto';
 import {Param} from '@nestjs/common/utils/decorators/route-params.decorator';
@@ -36,17 +36,17 @@ export class UserController {
         description: 'Get all users from the db. \nReturns an empty array if no user was found',
     })
     @HttpCode(HttpStatus.OK)
-    async findAll(): Promise<User[]> {
+    async findAll(): Promise<IUser[]> {
         return await this.userService.findAll();
     }
 
     @Get('getUserById/:id')
-    async findById(@Param('id') id: string): Promise<User> {
+    async findById(@Param('id') id: string): Promise<IUser> {
         return this.userService.findById(id);
     }
 
     @Get('GetUserByUsername/:username')
-    async findByPlatform(@Param('username') username: string): Promise<User[]> {
+    async findByUsername(@Param('username') username: string): Promise<IUser[]> {
         return this.userService.findByUsername(username);
     }
 }

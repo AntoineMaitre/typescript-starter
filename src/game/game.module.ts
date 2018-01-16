@@ -1,8 +1,8 @@
 /**
  * Created by tdoret on 15/01/2018.
  */
-import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import {Module} from '@nestjs/common';
+import {MongooseModule} from '@nestjs/mongoose';
 import {GameController} from './game.controller';
 import {GameService} from './game.service';
 import {GameSchema} from './schemas/game.schema';

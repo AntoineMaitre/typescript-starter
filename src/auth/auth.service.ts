@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import {Component} from '@nestjs/common';
-import {User} from "../user/interfaces/user.interface";
+import {IUser} from "../user/interfaces/user.interface";
 
 @Component()
 export class AuthService {
@@ -14,9 +14,9 @@ export class AuthService {
         };
     }
 
-    async validateUser(signedUser: User): Promise<boolean> {
+    async validateUser(signedUser: IUser): Promise<boolean> {
         // let user = await this.findOne(signedUser.id)
-        // put some validation logic here
+        // TODO put some validation logic here
         // for example query user by id / email / username
         return true;
     }

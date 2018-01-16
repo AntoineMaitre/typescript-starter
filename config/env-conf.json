@@ -1,8 +1,8 @@
 {
   "Twitch": {
-    "TWITCH_CLIENT_ID": "d1340vljmli7hmau05yui7xap2umi3",
-    "TWITCH_CLIENT_SECRET": "glyyinmieweh7v1vixrvlqlau1us4b",
-    "SESSION_SECRET": "12345",
-    "API_TWITCH_KEY": "1234"
+    "TWITCH_CLIENT_ID": "",
+    "TWITCH_CLIENT_SECRET": "",
+    "SESSION_SECRET": "",
+    "API_TWITCH_KEY": ""
   }
 }

@@ -1,8 +1,8 @@
 /**
  * Created by tdoret on 15/01/2018.
  */
-import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import {Module} from '@nestjs/common';
+import {MongooseModule} from '@nestjs/mongoose';
 import {PlatformController} from './platform.controller';
 import {PlatformService} from './platform.service';
 import {PlatformSchema} from './schemas/platform.schema';
@@ -13,4 +13,5 @@ import {PlatformSchema} from './schemas/platform.schema';
     components: [PlatformService],
 })
 
-export class PlatformrModule {}
+export class PlatformModule {
+}

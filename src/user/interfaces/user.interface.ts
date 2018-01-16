@@ -1,9 +1,9 @@
 /**
  * Created by tdoret on 15/01/2018.
  */
-import { Document } from 'mongoose';
+import {Document} from 'mongoose';
 
-export interface User extends Document {
+export interface IUser extends Document {
     readonly twitch_id: string;
     readonly firstname: string;
     readonly lastname: string;
@@ -23,7 +23,7 @@ export interface User extends Document {
     readonly app_token: string;
     readonly twitch_auth_token: string;
     readonly twitch_auth_refresh_token: string;
-    readonly followers: Follower[];
+    readonly followers: IFollower[];
     readonly subscribers: string[];
 }
 
@@ -32,7 +32,7 @@ export enum Role {
     STREAMER,
 }
 
-export interface UserTwitch extends Document {
+export interface IUserTwitch extends Document {
     readonly display_name: string;
     readonly _id: string;
     readonly name: string;
@@ -43,8 +43,8 @@ export interface UserTwitch extends Document {
     readonly logo: string;
 }
 
-export interface Follower extends Document {
+export interface IFollower extends Document {
     readonly created_at: Date;
     readonly notifications: boolean;
-    readonly user: UserTwitch;
+    readonly user: IUserTwitch;
 }
