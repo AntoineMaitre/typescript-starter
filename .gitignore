@@ -9,6 +9,11 @@
 # misc
 npm-debug.log
 
+# Logs
+/logs
+*.log
+.logs/
+
 # example
 /quick-start
 
@@ -19,3 +24,12 @@ npm-debug.log
 
 # dist
 /dist
+
+# Codeship CI/CD related
+codeship.aes
+env
+env.encrypted
+dockercfg.encrypted
+
+#to store env
+/config/env-conf.json

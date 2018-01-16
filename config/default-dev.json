@@ -1,0 +1,77 @@
+{
+  "AppPaths": {
+    // relative to appRoot
+    "swaggerFile": "/api/swagger.yaml",
+    "controllersDir": "/src/controllers",
+    "mockControllersDir": "/src/mocks",
+    "helpers": "/src/helpers",
+    "controllers": "/src/controllers"
+  },
+  "publicPath": {
+    "exact_match": [
+      "/",
+      "/api/auth",
+      "/api-docs"
+    ],
+    "partial_match": [
+      "/api/twitch/auth",
+      "/api/user/register"
+    ]
+  },
+  "fileRepository": {
+    "privatePath": "./ressources/images/",
+    "publicPath": "file://{host}/ressources/images/"
+  },
+  "server": {
+    "schemes": [
+      "http",
+      "https"
+    ],
+    "mongo": {
+      "connectionString": "mongodb://dev:dev@ds119368.mlab.com:19368/event-esport",
+      "options": {
+        "socketTimeoutMS": 0,
+        "keepAlive": true,
+        "reconnectTries": 30,
+        "useMongoClient": true
+      }
+    },
+    "host": "http://localhost",
+    "port": 10010,
+    "log4js": {
+      "appenders": {
+        "dateFile": {
+          "type": "dateFile",
+          "filename": "./logs/server.log",
+          "pattern": "-yyyy-MM-dd"
+        },
+        "console": {
+          "type": "console"
+        }
+      },
+      "categories": {
+        "default": {
+          "appenders": [
+            "dateFile",
+            "console"
+          ],
+          "level": "debug"
+        }
+      },
+      "replaceConsole": true
+    },
+    "frontUrl": [
+    ],
+    "twitch": {
+      "TWITCH_APP": "event-twitch-dev2",
+      "TWITCH_API_URL": "https://api.twitch.tv/kraken/",
+      "TWITCH_CALLBACK_URL": "http://localhost:10010/api/twitch/auth/callback"
+    },
+    "auth": {
+      "tokenDuration": {
+        "unit": "hours",
+        "value": 5
+      }
+    }
+  }
+}

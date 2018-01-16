@@ -1,0 +1,55 @@
+{
+  "AppPaths": {
+    // relative to appRoot
+    "swaggerFile": "/api/swagger.yaml",
+    "controllersDir": "/src/controllers",
+    "mockControllersDir": "/src/mocks",
+    "helpers": "/src/helpers",
+    "controllers": "/src/controllers"
+  },
+  "publicPath": {
+    "exact_match": [
+      "/",
+      "/api/auth",
+      "/api-docs"
+    ],
+    "partial_match": [
+      "/api/twitch/auth",
+      "/api/user/register"
+    ]
+  },
+  "fileRepository": {
+    "privatePath": "./ressources/images/",
+    "publicPath": "file://{host}/ressources/images/"
+  },
+  "server": {
+    "schemes": [
+      "https"
+    ],
+    "mongo": {
+      "connectionString": "mongodb://dev:dev@ds119368.mlab.com:19368/event-esport",
+      "options": {
+        "socketTimeoutMS": 0,
+        "keepAlive": true,
+        "reconnectTries": 30,
+        "useMongoClient": true
+      }
+    },
+    "host": "http://event-esport.herokuapp.com",
+    "port": 5000,
+    "frontUrl": [
+      "http://event-esport.herokuapp.com"
+    ],
+    "twitch": {
+      "TWITCH_APP": "event-twitch-CI",
+      "TWITCH_API_URL": "https://api.twitch.tv/kraken/",
+      "TWITCH_CALLBACK_URL": "https://event-esport.herokuapp.com/api/twitch/auth/callback"
+    },
+    "auth": {
+      "tokenDuration": {
+        "unit": "hours",
+        "value": 5
+      }
+    }
+  }
+}
