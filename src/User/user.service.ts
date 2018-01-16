@@ -5,7 +5,6 @@ import { Model } from 'mongoose';
 import { Component } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './interfaces/user.interface';
-// import { CreateCatDto } from './dto/create-cat.dto';
 import { UserSchema } from './schemas/user.schema';
 
 @Component()
@@ -14,5 +13,13 @@ export class UserService {
 
     async findAll(): Promise<User[]> {
         return await this.userModel.find().exec();
+    }
+
+    async findById(id: string): Promise<User> {
+        return await this.userModel.findById(id).exec();
+    }
+
+    async findByUsername(username: string): Promise<User[]> {
+        return await this.userModel.find({username: username}).exec();
     }
 }

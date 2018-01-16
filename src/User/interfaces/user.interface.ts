@@ -27,40 +27,24 @@ export interface User extends Document {
     readonly subscribers: string[];
 }
 
-export interface Role extends Document {
-    readonly name: string;
-    readonly description: string;
-    readonly active: boolean;
-    readonly created_at: Date;
-    readonly updated_at: Date;
+export enum Role {
+    VIEWER = 0,
+    STREAMER,
 }
 
-export interface UserTwitch extends {
-
+export interface UserTwitch extends Document {
+    readonly display_name: string;
+    readonly _id: string;
+    readonly name: string;
+    readonly type: string;
+    readonly bio: string;
+    readonly created_at: Date;
+    readonly updated_at: Date;
+    readonly logo: string;
 }
 
 export interface Follower extends Document {
-    created_at: Date;
-    notifications: boolean;
-    user: UserTwitch;
+    readonly created_at: Date;
+    readonly notifications: boolean;
+    readonly user: UserTwitch;
 }
-
-export interface UserTwitch extends {
-    display_name: string;
-    _id
-}
-
-let Follower = new Schema({
-    created_at: {type: Date, required: false},
-    notifications: {type: Boolean, required: false},
-    user: {
-        display_name: {type: String, required: false},
-        _id: {type: String, required: false},
-        name: {type: String, required: false},
-        type: {type: String, required: false},
-        bio: {type: String, required: false},
-        created_at: {type: Date, required: false},
-        updated_at: {type: Date, required: false},
-        logo: {type: String, required: false},
-    }
-})

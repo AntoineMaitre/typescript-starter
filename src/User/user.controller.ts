@@ -16,10 +16,17 @@ export class UserController {
         this.catsService.create(createCatDto);
     }*/
 
-    @ApiResponse({ status: 201, description: 'The record has been successfully created.'})
-    @ApiResponse({ status: 403, description: 'Forbidden.'})
     @Get()
     async findAll(): Promise<User[]> {
         return this.userService.findAll();
+    }
+    @Get('getUserById/:id')
+    async findById(@Param('id') id: string): Promise<User> {
+        return this.userService.findById(id);
+    }
+
+    @Get('GetUserByUsername/:username')
+    async findByPlatform(@Param('username') username: string): Promise<User[]> {
+        return this.userService.findByUsername(username);
     }
 }

@@ -19,6 +19,7 @@
     "@nestjs/websockets": "^4.4.0",
     "iridium": "^7.2.5",
     "jsonwebtoken": "^8.1.0",
+    "moment": "^2.20.1",
     "mongoose": "^4.13.9",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.1",

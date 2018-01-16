@@ -29,7 +29,7 @@ export const UserSchema = new mongoose.Schema({
     password: {type: String, required: false},
     // address: {type: [{type: Schema.ObjectId, ref: 'Address'}], required: false},
     phoneNumber: {type: String, required: false},
-    // roles: {type: [{type: Schema.ObjectId, ref: 'Role'}], required: false},
+    roles: {type: [{type: Number, required: false}]},
     active: {type: Boolean, required: true, default: true},
     created_at: {type: Date, required: true, default: new Date()},
     updated_at: {type: Date, required: true, default: new Date()},

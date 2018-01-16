@@ -12,7 +12,9 @@ async function bootstrap() {
         .addTag('User')
         .addTag('Twitch')
         .addTag('Platform')
-        .addBearerAuth("access_token")
+        .addTag('Game')
+        .addTag('Event')
+        .addBearerAuth('access_token')
         .setSchemes('http')
         .build();
     const document = SwaggerModule.createDocument(app, options);
