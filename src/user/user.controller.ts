@@ -5,7 +5,7 @@ import {Body, Controller, Get, HttpCode, HttpStatus, Post} from '@nestjs/common'
 import {UserService} from './user.service';
 import {User} from './interfaces/user.interface';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiUseTags} from '@nestjs/swagger';
-import {CreateUserDto} from "./dto/create-user.dto";
+import {CreateUserDto} from './dto/create-user.dto';
 
 @ApiUseTags('User')
 @Controller('user')
@@ -25,7 +25,6 @@ export class UserController {
         return await this.userService.create(createUserDto);
     }
 
-
     @Get()
     @ApiBearerAuth()
     @ApiResponse({status: 200, description: 'List of users successfully retrieved'})
@@ -33,7 +32,7 @@ export class UserController {
     @ApiResponse({status: 403, description: 'Access forbidden.'})
     @ApiOperation({
         title: 'Get users',
-        description: 'Get all users from the db. \nReturns an empty array if no user was found'
+        description: 'Get all users from the db. \nReturns an empty array if no user was found',
     })
     @HttpCode(HttpStatus.OK)
     async findAll(): Promise<User[]> {

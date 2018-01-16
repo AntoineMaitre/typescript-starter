@@ -6,7 +6,7 @@ import {Component} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {User} from './interfaces/user.interface';
 import {UserSchema} from './schemas/user.schema';
-import {CreateUserDto} from "./dto/create-user.dto";
+import {CreateUserDto} from './dto/create-user.dto';
 
 @Component()
 export class UserService {
