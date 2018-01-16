@@ -1,7 +1,7 @@
 import {IsString} from 'class-validator';
 import {ApiModelProperty} from '@nestjs/swagger';
 
-export class AuthUserDto {
+export class UserAuthDto {
     @ApiModelProperty({type: String})
     @IsString()
     readonly username;

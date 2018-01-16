@@ -7,6 +7,7 @@ import {AuthController} from './auth.controller';
 @Module({
     components: [AuthService, JwtStrategy],
     controllers: [AuthController],
+    exports: [AuthService]
 })
 export class AuthModule implements NestModule {
     public configure(consumer: MiddlewaresConsumer) {
