@@ -2,7 +2,7 @@
  * Created by tdoret on 15/01/2018.
  */
 import {Document} from 'mongoose';
-import {IUser} from '../../User/interfaces/user.interface';
+import {IUser} from '../../user/interfaces/user.interface';
 import {IGame} from '../../game/interfaces/game.interface';
 
 export interface IPlatform extends Document {

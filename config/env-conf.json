@@ -1,8 +1,0 @@
-{
-  "Twitch": {
-    "TWITCH_CLIENT_ID": "",
-    "TWITCH_CLIENT_SECRET": "",
-    "SESSION_SECRET": "",
-    "API_TWITCH_KEY": ""
-  }
-}
