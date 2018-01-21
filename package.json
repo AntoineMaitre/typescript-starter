@@ -7,7 +7,10 @@
     "start": "node $NODE_DEBUG_OPTION index.js",
     "start:watch": "nodemon",
     "prestart:prod": "tsc",
-    "start:prod": "node dist/main.js"
+    "start:prod": "node dist/main.js",
+    "test": "jest",
+    "e2e": "jest --config=e2e/jest-e2e.json --forceExit",
+    "e2e:watch": "jest --watch --config=e2e/jest-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "^4.5.9",
@@ -17,6 +20,7 @@
     "@nestjs/swagger": "^1.1.3",
     "@nestjs/testing": "^4.4.0",
     "@nestjs/websockets": "^4.4.0",
+    "@types/mongoose": "^4.7.32",
     "config": "^1.29.2",
     "iridium": "^7.2.5",
     "jsonwebtoken": "^8.1.0",
@@ -31,8 +35,27 @@
     "typescript": "^2.5.2"
   },
   "devDependencies": {
+    "@types/jest": "^22.0.1",
     "@types/node": "^8.0.28",
+    "jest": "^22.1.3",
+    "mockgoose": "^7.3.3",
     "nodemon": "^1.12.1",
+    "supertest": "^3.0.0",
+    "ts-jest": "^22.0.1",
     "ts-node": "^3.3.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }

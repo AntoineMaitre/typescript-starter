@@ -2,16 +2,14 @@
  * Created by tdoret on 15/01/2018.
  */
 import {Model} from 'mongoose';
-import {Component} from '@nestjs/common';
-import {InjectModel} from '@nestjs/mongoose';
-import {GameSchema} from './schemas/game.schema';
+import {Component, Inject} from '@nestjs/common';
 import {IGame} from './interfaces/game.interface';
 import {PlatformType} from '../platform/interfaces/platform.interface';
 import {CreateGameDto} from './dto/create-game.dto';
 
 @Component()
 export class GameService {
-    constructor(@InjectModel(GameSchema) private readonly gameModel: Model<IGame>) {
+    constructor(@Inject('GameModelToken') private readonly gameModel: Model<IGame>) {
     }
 
     async findAll(): Promise<IGame[]> {

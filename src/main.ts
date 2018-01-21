@@ -23,6 +23,7 @@ async function bootstrap() {
 
     // Define logger instance for core
     const logger = getLogger('server.core');
+    const {description, version} = require('../package.json');
 
     logger.info('/*************** *************** ***************/');
     logger.info('/*************** STARTING SERVER ***************/');
@@ -37,12 +38,24 @@ async function bootstrap() {
 
     // Create app
     const app = await NestFactory.create(ApplicationModule);
+    // app.setGlobalPrefix(prefix);
+
+    // Use Validation pipe
+    app.useGlobalPipes(new ValidationPipe());
+
+    // Use passport
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    // Define and connect logger for app
+    app.use(connectLogger(getLogger('server.http'), {level: 'info'}));
 
     // Create and publish Swagger documentation
     const options = new DocumentBuilder()
         .setTitle('Event eSport')
-        .setDescription('The Event eSport API')
-        .setVersion('1.0')
+        .setDescription(description)
+        .setVersion(version)
+        // .setBasePath(prefix)
         .addTag('Security')
         .addTag('User')
         .addTag('Twitch')
@@ -54,16 +67,6 @@ async function bootstrap() {
         .build();
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('/api', app, document);
-
-    // Use Validation pipe
-    app.useGlobalPipes(new ValidationPipe());
-
-    // Use passport
-    app.use(passport.initialize());
-    app.use(passport.session());
-
-    // Define and connect logger for app
-    app.use(connectLogger(getLogger('server.http'), {level: 'info'}));
 
     // Lift server instance
     await app.listen(port);

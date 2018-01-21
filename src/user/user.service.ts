@@ -2,15 +2,13 @@
  * Created by tdoret on 15/01/2018.
  */
 import {Model} from 'mongoose';
-import {Component} from '@nestjs/common';
-import {InjectModel} from '@nestjs/mongoose';
+import {Component, Inject} from '@nestjs/common';
 import {IUser} from './interfaces/user.interface';
-import {UserSchema} from './schemas/user.schema';
 import {CreateUserDto} from './dto/create-user.dto';
 
 @Component()
 export class UserService {
-    constructor(@InjectModel(UserSchema) private readonly userModel: Model<IUser>) {
+    constructor(@Inject('UserModelToken') private readonly userModel: Model<IUser>) {
     }
 
     async findAll(): Promise<IUser[]> {

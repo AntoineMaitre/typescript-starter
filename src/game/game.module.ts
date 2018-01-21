@@ -2,15 +2,16 @@
  * Created by tdoret on 15/01/2018.
  */
 import {Module} from '@nestjs/common';
-import {MongooseModule} from '@nestjs/mongoose';
 import {GameController} from './game.controller';
 import {GameService} from './game.service';
-import {GameSchema} from './schemas/game.schema';
+import {DatabaseModule} from "../database/database.module";
+import {gameProviders} from "./game.providers";
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: 'Game', schema: GameSchema }])],
+    imports: [DatabaseModule],
     controllers: [GameController],
-    components: [GameService],
+    components: [GameService, ...gameProviders],
 })
 
-export class GameModule {}
+export class GameModule {
+}

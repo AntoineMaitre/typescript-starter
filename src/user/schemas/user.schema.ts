@@ -14,8 +14,8 @@ export const FollowerSchema = new mongoose.Schema({
         bio: {type: String, required: false},
         created_at: {type: Date, required: false},
         updated_at: {type: Date, required: false},
-        logo: {type: String, required: false},
-    },
+        logo: {type: String, required: false}
+    }
 });
 
 export const UserSchema = new mongoose.Schema({
@@ -39,5 +39,5 @@ export const UserSchema = new mongoose.Schema({
     twitch_auth_token: {type: String, required: false},
     twitch_auth_refresh_token: {type: String, required: false},
     followers: {type: [{type: FollowerSchema, required: false}]},
-    subscribers: {type : [{type: String, required: false}]},
+    subscribers: {type: [{type: String, required: false}]}
 });

@@ -2,16 +2,16 @@
  * Created by tdoret on 15/01/2018.
  */
 import {Module} from '@nestjs/common';
-import {MongooseModule} from '@nestjs/mongoose';
 import {UserController} from './user.controller';
 import {UserService} from './user.service';
-import {UserSchema} from './schemas/user.schema';
-import {RegisterTokenSchema} from './schemas/registerToken.schema';
+import {DatabaseModule} from "../database/database.module";
+import {userProviders} from "./user.providers";
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: 'User', schema: UserSchema }, { name: 'RegisterToken', schema: RegisterTokenSchema }])],
+    imports: [DatabaseModule],
     controllers: [UserController],
-    components: [UserService],
+    components: [UserService, ...userProviders],
 })
 
-export class UserModule {}
+export class UserModule {
+}

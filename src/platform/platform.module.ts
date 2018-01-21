@@ -2,15 +2,15 @@
  * Created by tdoret on 15/01/2018.
  */
 import {Module} from '@nestjs/common';
-import {MongooseModule} from '@nestjs/mongoose';
 import {PlatformController} from './platform.controller';
 import {PlatformService} from './platform.service';
-import {PlatformSchema} from './schemas/platform.schema';
+import {DatabaseModule} from "../database/database.module";
+import {platformProviders} from "./platform.providers";
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: 'Platform', schema: PlatformSchema }])],
+    imports: [DatabaseModule],
     controllers: [PlatformController],
-    components: [PlatformService],
+    components: [PlatformService, ...platformProviders],
 })
 
 export class PlatformModule {
