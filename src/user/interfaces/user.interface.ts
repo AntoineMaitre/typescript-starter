@@ -2,6 +2,7 @@
  * Created by tdoret on 15/01/2018.
  */
 import {Document} from 'mongoose';
+import {IFollower} from "./follower.interface";
 
 export interface IUser extends Document {
     readonly twitch_id: string;
@@ -30,21 +31,4 @@ export interface IUser extends Document {
 export enum Role {
     VIEWER = 0,
     STREAMER,
-}
-
-export interface IUserTwitch extends Document {
-    readonly display_name: string;
-    readonly _id: string;
-    readonly name: string;
-    readonly type: string;
-    readonly bio: string;
-    readonly created_at: Date;
-    readonly updated_at: Date;
-    readonly logo: string;
-}
-
-export interface IFollower extends Document {
-    readonly created_at: Date;
-    readonly notifications: boolean;
-    readonly user: IUserTwitch;
 }
