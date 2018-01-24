@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 import * as config from 'config';
-import {Mockgoose} from 'mockgoose';
+import {Mockgoose} from 'mockgoose-fix';
 
 export const dbTokenProvider = {
     provide: 'DbToken',

@@ -39,6 +39,7 @@ describe('UserController', () => {
             let response = await userController.create(dto);
 
             expect(spy).toHaveBeenCalledWith(dto);
+            expect(spy).toHaveBeenCalledTimes(1);
             expect(response).toBe(result);
 
             spy.mockReset();
@@ -49,26 +50,43 @@ describe('UserController', () => {
         it('should return an array of users', async () => {
             const result: IUser[] = [];
             let spy = jest.spyOn(userService, 'findAll').mockImplementation(() => result);
+            let response = await userController.findAll();
 
-            expect(await userController.findAll()).toBe(result);
+            expect(spy).toHaveBeenCalled();
+            expect(spy).toHaveBeenCalledTimes(1);
+            expect(response).toBe(result);
+
+            spy.mockReset();
         });
     });
 
     describe('findById', () => {
         it('should return a user', async () => {
             const result = {};
-            jest.spyOn(userService, 'findById').mockImplementation(() => result);
+            const id: string = 'xxxxx';
+            let spy = jest.spyOn(userService, 'findById').mockImplementation(() => result);
+            let response = await userController.findById(id);
 
-            expect(await userController.findById('xxxxx')).toBe(result);
+            expect(spy).toHaveBeenCalledWith(id);
+            expect(spy).toHaveBeenCalledTimes(1);
+            expect(response).toBe(result);
+
+            spy.mockReset();
         });
     });
 
     describe('findByUsername', () => {
         it('should return a user', async () => {
             const result = {username: 'test'};
-            jest.spyOn(userService, 'findByUsername').mockImplementation(() => result);
+            const username: string = 'test';
+            let spy = jest.spyOn(userService, 'findByUsername').mockImplementation(() => result);
+            let response = await userController.findByUsername(username);
 
-            expect(await userController.findByUsername('test')).toBe(result);
+            expect(spy).toHaveBeenCalledWith(username);
+            expect(spy).toHaveBeenCalledTimes(1);
+            expect(response).toBe(result);
+
+            spy.mockReset();
         });
     });
 });
