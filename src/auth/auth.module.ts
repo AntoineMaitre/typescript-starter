@@ -3,10 +3,12 @@ import {MiddlewaresConsumer, Module, NestModule, RequestMethod,} from '@nestjs/c
 import {AuthService} from './auth.service';
 import {JwtStrategy} from './passport/jwt.strategy';
 import {AuthController} from './auth.controller';
-import {UserModule} from "../user/user.module";
+import {UserService} from "../user/user.service";
+import {userProviders} from "../user/user.providers";
+import {databaseProviders} from "../database/database.providers";
 
 @Module({
-    components: [AuthService, JwtStrategy, UserModule],
+    components: [AuthService, JwtStrategy, UserService, ...userProviders, ...databaseProviders],
     controllers: [AuthController],
     exports: [AuthService]
 })

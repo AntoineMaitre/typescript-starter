@@ -30,5 +30,5 @@ export interface IUser extends Document {
 
 export enum Role {
     VIEWER = 0,
-    STREAMER,
+    STREAMER = 1,
 }

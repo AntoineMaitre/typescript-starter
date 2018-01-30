@@ -5,6 +5,8 @@ import {Test} from '@nestjs/testing';
 import {UserModule} from '../../src/user/user.module';
 import {UserService} from "../../src/user/user.service";
 import {DatabaseModule} from "../../src/database/database.module";
+import {userProviders} from "../../src/user/user.providers";
+import {databaseProviders} from "../../src/database/database.providers";
 
 describe('Users', () => {
     const server = express();
@@ -13,12 +15,7 @@ describe('Users', () => {
     beforeAll(async () => {
         const module = await Test.createTestingModule({
             imports: [DatabaseModule, UserModule],
-            components: [UserService, {
-                provide: 'UserModelToken',
-                useValue: {
-                    // Your mock
-                }
-            }]
+            components: [UserService, ...userProviders, ...databaseProviders]
         }).compile();
 
         const app = module.createNestApplication(server);

@@ -20,7 +20,7 @@
       "https"
     ],
     "mongo": {
-      "connectionString": "mongodb://dev:dev@ds119368.mlab.com:19368/event-esport",
+      "connectionString": "mongodb://localhost:27017/event-esport",
       "options": {
         "socketTimeoutMS": 0,
         "keepAlive": true,

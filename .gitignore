@@ -33,3 +33,5 @@ dockercfg.encrypted
 
 #to store env
 /config/env-conf.json
+/data/
+/diagnostic.data/
