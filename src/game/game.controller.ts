@@ -28,8 +28,8 @@ export class GameController {
         return this.gameService.findByPlatformType(type);
     }
 
-    @Post()
-    async create(@Body() createGameDto: CreateGameDto): Promise<IGame> {
-        return this.gameService.create(createGameDto);
-    }
+    // @Post()
+    // async create(@Body() createGameDto: CreateGameDto): Promise<IGame> {
+    //     return this.gameService.create(createGameDto);
+    // }
 }
