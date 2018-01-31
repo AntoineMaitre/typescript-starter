@@ -1,16 +1,22 @@
-import {ApiUseTags} from "@nestjs/swagger";
-import {Controller, Get} from "@nestjs/common";
+import {Controller, Get, Next, Req, Res} from "@nestjs/common";
 import {TwitchService} from "./twitch.service";
 
-@ApiUseTags('Twitch')
 @Controller('twitch')
 export class TwitchController {
-    constructor(private readonly twitchService: TwitchService) {
-    }
+    constructor(private readonly twitchService: TwitchService) {}
 
     @Get('auth')
-    async auth(): Promise<any> {
-        return {};
+    auth(@Req() req, @Res() res, @Next() next): any {
+        this.twitchService.auth(req, res, next)
     }
 
+    @Get('auth/callback')
+    authCallback(@Req() req, @Res() res, @Next() next): any {
+        this.twitchService.authCallback(req, res, next);
+    }
+
+    @Get('auth/result')
+    resultTwitch(@Req() req, @Res() res): any {
+        return this.twitchService.authResult(req, res)
+    }
 }

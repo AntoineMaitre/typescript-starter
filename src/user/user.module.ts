@@ -10,7 +10,7 @@ import {userProviders} from "./user.providers";
 @Module({
     imports: [DatabaseModule],
     controllers: [UserController],
-    components: [UserService, ...userProviders],
+    components: [UserService, ...userProviders]
 })
 
 export class UserModule {

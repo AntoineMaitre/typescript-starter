@@ -6,6 +6,7 @@ import {configure, connectLogger, getLogger} from 'log4js';
 import * as passport from 'passport';
 import * as config from 'config';
 import * as mkdirp from 'mkdirp';
+import * as session from 'express-session';
 
 async function configureLogging() {
     mkdirp.sync('../logs');
@@ -44,6 +45,7 @@ async function bootstrap() {
     app.useGlobalPipes(new ValidationPipe());
 
     // Use passport
+    app.use(session({secret: "test", resave: false, saveUninitialized: false}));
     app.use(passport.initialize());
     app.use(passport.session());
 
@@ -58,7 +60,6 @@ async function bootstrap() {
         // .setBasePath(prefix)
         .addTag('Security')
         .addTag('User')
-        .addTag('Twitch')
         .addTag('Platform')
         .addTag('Game')
         .addTag('Event')
