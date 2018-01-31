@@ -20,6 +20,7 @@
     "@nestjs/swagger": "^1.1.3",
     "@nestjs/testing": "^4.4.0",
     "@nestjs/websockets": "^4.4.0",
+    "@types/moment": "^2.13.0",
     "@types/mongoose": "^4.7.32",
     "config": "^1.29.2",
     "iridium": "^7.2.5",

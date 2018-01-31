@@ -5,12 +5,13 @@ import {Module} from '@nestjs/common';
 import {UserController} from './user.controller';
 import {UserService} from './user.service';
 import {DatabaseModule} from "../database/database.module";
-import {userProviders} from "./user.providers";
+import {DatabaseConfig} from "../database/database.config";
+import {IridiumDatabaseConfig} from "../database/iridium.database.config";
 
 @Module({
     imports: [DatabaseModule],
     controllers: [UserController],
-    components: [UserService, ...userProviders],
+    components: [UserService, {provide: IridiumDatabaseConfig, useClass: DatabaseConfig}],
 })
 
 export class UserModule {

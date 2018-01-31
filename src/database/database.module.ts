@@ -1,9 +1,9 @@
 import {Module} from '@nestjs/common';
-import {databaseProviders} from './database.providers';
+import {IridiumDatabaseService} from "./iridium.database.service";
 
 @Module({
-    components: [...databaseProviders],
-    exports: [...databaseProviders],
+    components: [IridiumDatabaseService],
+    exports: [IridiumDatabaseService],
 })
 export class DatabaseModule {
 }

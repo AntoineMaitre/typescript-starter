@@ -25,7 +25,8 @@
         "socketTimeoutMS": 0,
         "keepAlive": true,
         "reconnectTries": 30,
-        "useMongoClient": true
+        "useMongoClient": true,
+        "autoReconnect": true
       }
     },
     "host": "http://localhost",
