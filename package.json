@@ -37,6 +37,7 @@
     "passport-jwt": "^3.0.1",
     "passport-oauth": "^1.0.0",
     "passport-twitch": "^1.0.3",
+    "rand-token": "^0.4.0",
     "redis": "^2.7.1",
     "reflect-metadata": "^0.1.10",
     "request": "^2.83.0",

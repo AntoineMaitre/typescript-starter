@@ -64,6 +64,10 @@
         "unit": "hours",
         "value": 5
       }
+    },
+    "RegisterTokenDuration": {
+        "unit": "minute",
+        "value": 15
     }
   }
 }

@@ -1,7 +1,7 @@
 /**
  * Created by tdoret on 26/01/2018.
  */
-import {Component} from '@nestjs/common';
+import {Component, HttpException, HttpStatus, NotFoundException, UnauthorizedException} from '@nestjs/common';
 import * as passport from 'passport';
 import * as passportAuth from 'passport-oauth';
 import * as config from 'config';
@@ -42,40 +42,48 @@ export class TwitchService {
 
     async auth(req, res, next) {
         let registerToken = await this.registerTokenService.createRegisterToken();
-        console.log(registerToken);
         passport.authenticate('twitch', {
             scope: ['user_read', 'channel_subscriptions'],
             state: registerToken.register_request_token
         })(req, res, next);
     }
 
-    authCallback(req, res, next) {
-        passport.authenticate('twitch', {
-            successRedirect: '/twitch/auth/result?state='+req.query.state,
-            failureRedirect: '/twitch/auth/'
-        })(req, res, next);
+    async authCallback(req, res, next) {
+        let isAuthorized = await this.registerTokenService.handleRegisterToken(req.query.state);
+        if(isAuthorized)
+            passport.authenticate('twitch', {
+                successRedirect: '/twitch/auth/result?state='+req.query.state,
+                failureRedirect: '/twitch/auth/'
+            })(req, res, next);
+        else {
+            throw new UnauthorizedException();
+        }
+
     }
 
     async authResult(req, res) {
-        let accessToken = req.user ? req.user.accessToken: undefined;
-        let refreshToken = req.user ? req.user.refreshToken: undefined;
+        let isAuthorized = await this.registerTokenService.handleRegisterToken(req.query.state);
+        if(isAuthorized) {
+            let accessToken = req.user ? req.user.accessToken: undefined;
+            let refreshToken = req.user ? req.user.refreshToken: undefined;
 
-        let user = await this.getTwitchUser(accessToken);
+            let user = await this.getTwitchUser(accessToken);
 
-        if (user) {
-            user.accessToken = accessToken;
-            user.refreshToken = refreshToken;
+            if (user) {
+                user.accessToken = accessToken;
+                user.refreshToken = refreshToken;
 
-            res.status(200).send(JSON.stringify({
-                twitch_user: user,
-                register_token: req.query.state
-            } || {}, null, 2));
+                res.status(200).send(JSON.stringify({
+                    twitch_user: user,
+                    register_token: req.query.state
+                } || {}, null, 2));
+            } else {
+                throw new NotFoundException();
+            }
         } else {
-            res.status(404).send(JSON.stringify({
-                twitch_user: 'USER_NOT_FOUND',
-                register_token: null
-            } || {}, null, 2))
+            throw new UnauthorizedException();
         }
+
     }
 
     async getTwitchUser(accessToken) : Promise<any> {
