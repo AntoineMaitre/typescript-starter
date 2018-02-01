@@ -26,10 +26,8 @@ export class AuthService {
     }
 
     async validateUser(signedUser: IUser): Promise<boolean> {
-        // let user = await this.findOne(signedUser.id)
-        // TODO put some validation logic here
-        // for example query user by id / email / username
-        return true;
+        let foundUser = await this.userService.findById(signedUser._id);
+        return !_.isNil(foundUser);
     }
 
     async authenticateUser(userAuthDto: UserAuthDto): Promise<IUser> {
@@ -41,7 +39,7 @@ export class AuthService {
         if (!_.isNil(foundUser) && await this.comparePasswords(userAuthDto.password, foundUser.password)) {
             return foundUser;
         } else {
-            return Promise.reject({errorCode: 401, errorMessage: 'User not found or incorrect password'});
+            return Promise.reject('Invalid credentials provided');
         }
     }
 

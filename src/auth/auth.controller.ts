@@ -26,4 +26,15 @@ export class AuthController {
             throw new UnauthorizedException(e);
         }
     }
+
+    // @Get('authorized')
+    // @ApiBearerAuth()
+    // @ApiResponse({status: 200, description: 'The user has been successfully authorized.'})
+    // @ApiResponse({status: 404, description: 'User not found.'})
+    // @ApiResponse({status: 400, description: 'Bad parameter.'})
+    // @ApiResponse({status: 403, description: 'Forbidden'})
+    // @HttpCode(HttpStatus.OK)
+    // public async authorized() {
+    //     console.log('Authorized route');
+    // }
 }

@@ -62,7 +62,7 @@ async function bootstrap() {
         .addTag('Platform')
         .addTag('Game')
         .addTag('Event')
-        .addBearerAuth('access_token')
+        .addBearerAuth('Authorization')
         .setSchemes('http')
         .build();
     const document = SwaggerModule.createDocument(app, options);
