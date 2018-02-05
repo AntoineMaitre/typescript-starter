@@ -11,18 +11,27 @@ export class AuthService {
     constructor(private readonly userService: UserService) {
     }
 
-    createToken(user: IUser) {
-        const expiresIn = config.get('server.auth.tokenDuration.value'), secretOrKey = 'secret';
+    async createToken(user: IUser) {
+        const expiresIn = config.get('server.auth.tokenDuration.value'), secretOrKey = process.env.SECRET_KEY;
         const toBeSignedUser: any = {
             email: user.email,
             username: user.username,
-            twitchId: user.twitch_id
+            twitchId: user.twitch_id,
+            userId: user._id
         };
         const token = jwt.sign(toBeSignedUser, secretOrKey, {expiresIn});
+
         return {
             expires_in: expiresIn,
             access_token: token,
+            user_id: user._id
         };
+    }
+
+    async updateToken(user: IUser) {
+        let token = await this.createToken(user);
+        await this.userService.updateToken(user._id, token.access_token);
+        return token;
     }
 
     async validateUser(signedUser: IUser): Promise<boolean> {

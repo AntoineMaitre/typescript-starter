@@ -18,23 +18,11 @@ export class AuthController {
     @ApiResponse({status: 404, description: 'User not found.'})
     @HttpCode(HttpStatus.OK)
     public async authenticate(@Body() userAuthDto: UserAuthDto) {
-        // TODO relocate call to createToken into authenticateUser and make createToken() private
         try {
             let user = await this.authService.authenticateUser(userAuthDto);
-            return this.authService.createToken(user);
+            return this.authService.updateToken(user);
         } catch (e) {
             throw new UnauthorizedException(e);
         }
     }
-
-    // @Get('authorized')
-    // @ApiBearerAuth()
-    // @ApiResponse({status: 200, description: 'The user has been successfully authorized.'})
-    // @ApiResponse({status: 404, description: 'User not found.'})
-    // @ApiResponse({status: 400, description: 'Bad parameter.'})
-    // @ApiResponse({status: 403, description: 'Forbidden'})
-    // @HttpCode(HttpStatus.OK)
-    // public async authorized() {
-    //     console.log('Authorized route');
-    // }
 }
