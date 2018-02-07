@@ -27,7 +27,13 @@ export class UserService {
         return await this.userModel.findOne({email: email}).exec();
     }
 
+    async updateToken(userId: string, token: string): Promise<any> {
+        return await this.userModel.findByIdAndUpdate(userId, {app_token: token}).exec();
+    }
+
     async create(createUserDto: CreateUserDto): Promise<IUser> {
+        // TODO uncomment this line when it's needed
+        // createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
         const createdUser = new this.userModel(createUserDto);
         return await createdUser.save();
     }

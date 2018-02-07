@@ -18,10 +18,9 @@ export class AuthController {
     @ApiResponse({status: 404, description: 'User not found.'})
     @HttpCode(HttpStatus.OK)
     public async authenticate(@Body() userAuthDto: UserAuthDto) {
-        // TODO relocate call to createToken into authenticateUser and make createToken() private
         try {
             let user = await this.authService.authenticateUser(userAuthDto);
-            return this.authService.createToken(user);
+            return this.authService.updateToken(user);
         } catch (e) {
             throw new UnauthorizedException(e);
         }
