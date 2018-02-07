@@ -7,6 +7,7 @@ import * as passport from 'passport';
 import * as config from 'config';
 import * as mkdirp from 'mkdirp';
 import * as session from 'express-session';
+import * as bodyParser from "body-parser";
 
 async function configureLogging() {
     mkdirp.sync('../logs');
@@ -43,6 +44,10 @@ async function bootstrap() {
 
     // Use Validation pipe
     app.useGlobalPipes(new ValidationPipe());
+
+    // Body parser
+    app.use(bodyParser.urlencoded({extended: false}));
+    app.use(bodyParser.json());
 
     // Use passport
     app.use(session({secret: process.env.SECRET_KEY, resave: false, saveUninitialized: false}));

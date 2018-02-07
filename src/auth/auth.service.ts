@@ -1,5 +1,4 @@
 import * as jwt from 'jsonwebtoken';
-import * as config from 'config';
 import * as _ from 'lodash';
 import {Component} from '@nestjs/common';
 import {IUser} from "../user/interfaces/user.interface";
@@ -12,7 +11,8 @@ export class AuthService {
     }
 
     async createToken(user: IUser) {
-        const expiresIn = config.get('server.auth.tokenDuration.value'), secretOrKey = process.env.SECRET_KEY;
+        // TODO make expires according to the config (better than this sh**)
+        const expiresIn = '1h', secretOrKey = process.env.SECRET_KEY;
         const toBeSignedUser: any = {
             email: user.email,
             username: user.username,
@@ -34,11 +34,6 @@ export class AuthService {
         return token;
     }
 
-    async validateUser(signedUser: IUser): Promise<boolean> {
-        let foundUser = await this.userService.findById(signedUser._id);
-        return !_.isNil(foundUser);
-    }
-
     async authenticateUser(userAuthDto: UserAuthDto): Promise<IUser> {
         let foundUser = await this.userService.findByEmail(userAuthDto.email);
         // check if user exists
@@ -53,7 +48,7 @@ export class AuthService {
     }
 
     private async comparePasswords(inPwd: string, userPwd): Promise<boolean> {
-        // TODO implement salt/hash password logic to compare pwds
+        // return bcrypt.compareSync(inPwd, userPwd);
         return inPwd === userPwd;
     }
 }

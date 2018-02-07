@@ -12,14 +12,10 @@ export const dbTokenProvider = {
             mockgoose.helper.setDbVersion('3.4.3');
 
             mockgoose.prepareStorage().then(async () => {
-                await mongoose.connect(config.get('server.mongo.connectionString'), {
-                    useMongoClient: true,
-                });
+                await mongoose.connect(config.get('server.mongo.connectionString'));
             });
         } else {
-            await mongoose.connect(config.get('server.mongo.connectionString'), {
-                useMongoClient: true,
-            });
+            await mongoose.connect(config.get('server.mongo.connectionString'));
         }
 
         return mongoose;
@@ -37,14 +33,10 @@ export const databaseProviders = [
                 mockgoose.helper.setDbVersion('3.4.3');
 
                 mockgoose.prepareStorage().then(async () => {
-                    await mongoose.connect(config.get('server.mongo.connectionString'), {
-                        useMongoClient: true,
-                    });
+                    await mongoose.connect(config.get('server.mongo.connectionString'));
                 });
             } else {
-                await mongoose.connect(config.get('server.mongo.connectionString'), {
-                    useMongoClient: true,
-                });
+                await mongoose.connect(config.get('server.mongo.connectionString'));
             }
 
             return mongoose;

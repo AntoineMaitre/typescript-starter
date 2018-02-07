@@ -1,28 +1,25 @@
 import * as passport from 'passport';
 import {ExtractJwt, Strategy} from 'passport-jwt';
-import {Component, UnauthorizedException} from '@nestjs/common';
-import {AuthService} from '../auth.service';
+import {Component} from '@nestjs/common';
+import {UserService} from '../../user/user.service';
 
 @Component()
 export class JwtStrategy extends Strategy {
-    constructor(private readonly authService: AuthService) {
+    constructor(private readonly userService: UserService) {
         super(
             {
-                jwtFromRequest: ExtractJwt.fromHeader('access_token'),
+                jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
                 passReqToCallback: true,
                 secretOrKey: process.env.SECRET_KEY,
             },
-            async (req, payload, next) => await this.handleToken(req, payload, next),
+            async (req, payload, next) => await this.verify(req, payload, next)
         );
-        passport.use(this);
+        passport.use(this)
     }
 
-    public async handleToken(req, payload, done) {
-        console.log('handle token payload')
-        const isValid = await this.authService.validateUser(payload);
-        if (!isValid) {
-            return done(new UnauthorizedException(), false);
-        }
-        done(null, payload);
+    public async verify(req, payload, done) {
+        return await this.userService.findById(payload.userId)
+            .then(signedUser => done(null, signedUser))
+            .catch(err => done('Invalid authorization', false))
     }
 }

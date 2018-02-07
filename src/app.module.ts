@@ -1,29 +1,18 @@
-import {MiddlewaresConsumer, Module, NestModule, RequestMethod} from '@nestjs/common';
-import {MongooseModule} from '@nestjs/mongoose';
+import {Module} from '@nestjs/common';
 import {AuthModule} from './auth/auth.module';
 import {UserModule} from './user/user.module';
 import {GameModule} from './game/game.module';
 import {PlatformModule} from './platform/platform.module';
 import {EventModule} from './event/event.module';
 import {TwitchModule} from "./twitch/twitch.module";
-import * as passport from 'passport';
+import {userProviders} from "./user/user.providers";
+import {databaseProviders} from "./database/database.providers";
+import {DatabaseModule} from "./database/database.module";
 
 @Module({
-    imports: [AuthModule, UserModule, GameModule, PlatformModule, EventModule, TwitchModule, MongooseModule.forRoot('mongodb://dev:dev@ds119368.mlab.com:19368/event-esport')],
+    imports: [DatabaseModule, AuthModule, UserModule, GameModule, PlatformModule, EventModule, TwitchModule],
     controllers: [],
-    components: [],
+    components: [...userProviders, ...databaseProviders],
 })
-export class ApplicationModule implements NestModule{
-    configure(consumer: MiddlewaresConsumer) {
-        consumer
-            .apply(passport.authenticate('jwt', {session: false}))
-            .forRoutes(//TODO refactor properly private route to check
-                { path: '/user', method: RequestMethod.GET},
-                { path: '/user', method: RequestMethod.PUT},
-                { path: '/user', method: RequestMethod.DELETE},
-                { path: '/game'},
-                { path: '/event'},
-                { path: '/platform'},
-            );
-    }
+export class ApplicationModule {
 }

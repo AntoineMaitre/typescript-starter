@@ -9,7 +9,7 @@ import {databaseProviders} from "../database/database.providers";
 @Module({
     components: [AuthService, JwtStrategy, UserService, ...userProviders, ...databaseProviders],
     controllers: [AuthController],
-    exports: [AuthService]
+    exports: [AuthService, JwtStrategy]
 })
 export class AuthModule {
 }
