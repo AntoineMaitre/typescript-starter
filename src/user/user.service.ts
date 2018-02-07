@@ -8,7 +8,6 @@ import {CreateUserDto} from './dto/create-user.dto';
 import {IRegisterToken} from "./interfaces/register-token.interface";
 import * as randToken from 'rand-token';
 import * as crypto from 'crypto';
-import * as bcrypt from 'bcrypt';
 
 @Component()
 export class UserService {
@@ -36,7 +35,8 @@ export class UserService {
     }
 
     async create(createUserDto: CreateUserDto): Promise<IUser> {
-        createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
+        // TODO uncomment this line when it's needed
+        // createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
         const createdUser = new this.userModel(createUserDto);
         return await createdUser.save();
     }

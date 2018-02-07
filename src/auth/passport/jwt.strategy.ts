@@ -8,7 +8,7 @@ export class JwtStrategy extends Strategy {
     constructor(private readonly userService: UserService) {
         super(
             {
-                jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+                jwtFromRequest: ExtractJwt.fromHeader('authorization'),
                 passReqToCallback: true,
                 secretOrKey: process.env.SECRET_KEY,
             },
