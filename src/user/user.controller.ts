@@ -1,7 +1,7 @@
 /**
  * Created by tdoret on 15/01/2018.
  */
-import {Body, Controller, Get, HttpCode, HttpStatus, Post} from '@nestjs/common';
+import {Body, Controller, Inject, Get, HttpCode, HttpStatus, Post, Query, HttpException} from '@nestjs/common';
 import {UserService} from './user.service';
 import {IUser} from './interfaces/user.interface';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiUseTags} from '@nestjs/swagger';
@@ -21,8 +21,14 @@ export class UserController {
     @ApiResponse({status: 404, description: 'User not found.'})
     @ApiResponse({status: 403, description: 'Access forbidden.'})
     @HttpCode(HttpStatus.CREATED)
-    async create(@Body() createUserDto: CreateUserDto) {
-        return await this.userService.create(createUserDto);
+    async create(@Body() createUserDto: CreateUserDto, @Query('state') state: string) {
+        return await this.userService
+            .create(createUserDto, state)
+            .catch(ex => {
+                console.log(ex)
+                if(ex.status != HttpStatus.OK)
+                    throw new HttpException(ex, ex.status)
+            });
     }
 
     @Get()

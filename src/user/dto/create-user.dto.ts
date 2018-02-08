@@ -1,25 +1,41 @@
-import {IsDateString, IsString} from 'class-validator';
+import {IsString, IsInt} from 'class-validator';
 import {ApiModelProperty, ApiModelPropertyOptional} from "@nestjs/swagger";
+import {Role} from "../interfaces/user.interface";
 
 export class CreateUserDto {
     @ApiModelProperty({type: String})
     @IsString()
-    readonly username: string;
+    readonly twitch_id;
 
     @ApiModelProperty({type: String})
     @IsString()
-    password: string;
+    readonly email;
 
     @ApiModelProperty({type: String})
     @IsString()
-    readonly name: string;
-
-    @ApiModelPropertyOptional({type: String})
-    @IsDateString()
-    readonly birthDate: String;
+    readonly password;
 
     @ApiModelProperty({type: String})
     @IsString()
-    readonly email: string
+    readonly passwordConfirm;
+
+    @ApiModelProperty({type: String})
+    @IsString()
+    readonly username;
+
+    @ApiModelProperty({type: String})
+    @IsString()
+    readonly avatar;
+
+    @ApiModelProperty({type: String})
+    @IsString()
+    readonly accessToken;
+
+    @ApiModelProperty({type: String})
+    @IsString()
+    readonly refreshToken;
+
+    @ApiModelProperty({type: Number, isArray: true})
+    readonly role;
 }
 

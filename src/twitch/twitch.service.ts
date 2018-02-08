@@ -6,7 +6,7 @@ import * as passport from 'passport';
 import * as passportAuth from 'passport-oauth';
 import * as config from 'config';
 import "isomorphic-fetch";
-import {RegisterTokenService} from "../user/user.service";
+import {RegisterTokenService} from "../user/register-token.service";
 
 const TWITCH_CLIENT_ID = process.env.TWITCH_CLIENT_ID,
     TWITCH_SECRET = process.env.TWITCH_CLIENT_SECRET,
