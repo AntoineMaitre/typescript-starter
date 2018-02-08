@@ -8,6 +8,9 @@ import * as config from 'config';
 import * as mkdirp from 'mkdirp';
 import * as session from 'express-session';
 import * as bodyParser from "body-parser";
+import * as helmet from 'helmet';
+import * as compression from 'compression';
+import responseTime = require('response-time');
 
 async function configureLogging() {
     mkdirp.sync('../logs');
@@ -42,12 +45,19 @@ async function bootstrap() {
     const app = await NestFactory.create(ApplicationModule);
     // app.setGlobalPrefix(prefix);
 
+    // Using helmet before all
+    app.use(helmet());
+
     // Use Validation pipe
     app.useGlobalPipes(new ValidationPipe());
 
     // Body parser
     app.use(bodyParser.urlencoded({extended: false}));
     app.use(bodyParser.json());
+
+    // Custom useful middlewares
+    app.use(responseTime());
+    app.use(compression());
 
     // Use passport
     app.use(session({secret: process.env.SECRET_KEY, resave: false, saveUninitialized: false}));
