@@ -6,13 +6,14 @@ import {Component, HttpException, HttpStatus, Inject, UnauthorizedException} fro
 import {IUser} from './interfaces/user.interface';
 import {CreateUserDto} from './dto/create-user.dto';
 import {TwitchService} from "../twitch/twitch.service";
-import {RegisterTokenService} from "./register-token.service";
+import {RegisterTokenService} from "../register-token/register-token.service";
 
 @Component()
 export class UserService {
     constructor(@Inject('UserModelToken') private readonly userModel: Model<IUser>,
-                private readonly twitchService: TwitchService,
-                private readonly registerTokenService: RegisterTokenService) {
+                private readonly registerTokenService: RegisterTokenService,
+                private readonly twitchService: TwitchService
+                ) {
     }
 
     async findAll(): Promise<IUser[]> {
@@ -21,6 +22,14 @@ export class UserService {
 
     async findById(id: string): Promise<IUser> {
         return await this.userModel.findById(id).exec();
+    }
+
+    async findByEmail(email: string): Promise<IUser> {
+        return await this.userModel.findOne({email: email}).exec();
+    }
+
+    async updateToken(userId: string, token: string): Promise<any> {
+        return await this.userModel.findByIdAndUpdate(userId, {app_token: token}).exec();
     }
 
     async findByUsername(username: string): Promise<IUser[]> {
@@ -61,9 +70,8 @@ export class UserService {
                 twitch_auth_refresh_token: createUserDto.refreshToken,
                 followers: followers ? followers.follows : [],
                 subscribers: subscribers ? subscribers : [],
-                //TODO ajouter app_token en fonction de l'implem d'Antoine :)
-                firstname: null,//sanitizer.escape(userToAdd.username),
-                lastname: null, //sanitizer.escape(userToAdd.username),
+                firstname: null,
+                lastname: null,
                 username: createUserDto.username,
                 avatar: createUserDto.avatar,
                 email: createUserDto.email,

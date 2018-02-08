@@ -1,4 +1,4 @@
-import {RegisterTokenSchema} from "../user/schemas/register-token.schema";
+import {RegisterTokenSchema} from "./schemas/register-token.schema";
 
 export const registerTokenProviders = [
     {

@@ -7,18 +7,20 @@ import {UserService} from './user.service';
 import {DatabaseModule} from "../database/database.module";
 import {userProviders} from "./user.providers";
 import {JwtMiddleware} from "../common/middlewares/jwt.middleware";
-import {databaseProviders} from "../database/database.providers";
+import {TwitchModule} from "../twitch/twitch.module";
+import {RegisterTokenModule} from "../register-token/register-token.module";
 
 @Module({
-    imports: [DatabaseModule],
+    imports: [DatabaseModule, TwitchModule, RegisterTokenModule],
     controllers: [UserController],
-    components: [UserService, ...userProviders, ...databaseProviders]
+    components: [UserService, ...userProviders],
+    exports: [UserService, ...userProviders]
 })
 
 export class UserModule implements NestModule {
     public configure(consumer: MiddlewaresConsumer) {
         consumer.apply(JwtMiddleware).forRoutes(
-            {path: '/user', method: RequestMethod.ALL}
+            {path: '/user', method: RequestMethod.GET}
         );
     }
 }

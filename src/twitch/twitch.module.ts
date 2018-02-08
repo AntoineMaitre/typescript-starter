@@ -1,15 +1,14 @@
 import {Module} from '@nestjs/common';
 import {TwitchService} from './twitch.service';
 import {TwitchController} from "./twitch.controller";
-import {RegisterTokenService} from "../user/register-token.service";
-import {userProviders} from "../user/user.providers";
 import {DatabaseModule} from "../database/database.module";
+import {RegisterTokenModule} from "../register-token/register-token.module";
 
 @Module({
-    imports: [DatabaseModule],
+    imports: [DatabaseModule, RegisterTokenModule],
     controllers: [TwitchController],
-    components: [TwitchService, RegisterTokenService, ...userProviders],
-
+    components: [TwitchService],
+    exports: [TwitchService]
 })
 
 export class TwitchModule {

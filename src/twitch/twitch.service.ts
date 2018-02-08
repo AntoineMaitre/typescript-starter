@@ -1,12 +1,12 @@
 /**
  * Created by tdoret on 26/01/2018.
  */
-import {Component, NotFoundException, UnauthorizedException} from '@nestjs/common';
+import {Component, Inject, NotFoundException, UnauthorizedException} from '@nestjs/common';
 import * as passport from 'passport';
 import * as passportAuth from 'passport-oauth';
 import * as config from 'config';
 import "isomorphic-fetch";
-import {RegisterTokenService} from "../user/register-token.service";
+import {RegisterTokenService} from "../register-token/register-token.service";
 
 const TWITCH_CLIENT_ID = process.env.TWITCH_CLIENT_ID,
     TWITCH_SECRET = process.env.TWITCH_CLIENT_SECRET,
@@ -50,6 +50,7 @@ export class TwitchService {
 
     async authCallback(req, res, next) {
         let isAuthorized = await this.registerTokenService.handleRegisterToken(req.query.state);
+        console.log(isAuthorized)
         if (isAuthorized)
             passport.authenticate('twitch', {
                 successRedirect: '/twitch/auth/result?state=' + req.query.state,
