@@ -15,7 +15,6 @@ export class UserController {
     }
 
     @Post('')
-    @ApiBearerAuth()
     @ApiOperation({title: 'Create a new user', description: 'Insert a new user record in the db'})
     @ApiResponse({status: 201, description: 'The user has been successfully created.'})
     @ApiResponse({status: 400, description: 'Bad parameter.'})

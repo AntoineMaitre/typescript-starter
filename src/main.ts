@@ -10,7 +10,7 @@ import * as session from 'express-session';
 import * as bodyParser from "body-parser";
 import * as helmet from 'helmet';
 import * as compression from 'compression';
-import responseTime = require('response-time');
+import * as responseTime from 'response-time';
 
 async function configureLogging() {
     mkdirp.sync('../logs');

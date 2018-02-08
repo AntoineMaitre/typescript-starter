@@ -11,7 +11,6 @@ export class AuthController {
 
     @Post('')
     @ApiOperation({title: 'Authenticates a user', description: 'Authenticates user credentials against db'})
-    @ApiBearerAuth()
     @ApiResponse({status: 200, description: 'The user has been successfully authenticated.'})
     @ApiResponse({status: 400, description: 'Bad parameter.'})
     @ApiResponse({status: 401, description: 'Invalid credentials.'})
