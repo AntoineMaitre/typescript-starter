@@ -12,7 +12,7 @@ import {databaseProviders} from "../database/database.providers";
 @Module({
     imports: [DatabaseModule],
     controllers: [UserController],
-    components: [UserService, ...userProviders, ...databaseProviders],
+    components: [UserService, ...userProviders, ...databaseProviders]
 })
 
 export class UserModule implements NestModule {

@@ -5,6 +5,9 @@ import {Model} from 'mongoose';
 import {Component, Inject} from '@nestjs/common';
 import {IUser} from './interfaces/user.interface';
 import {CreateUserDto} from './dto/create-user.dto';
+import {IRegisterToken} from "./interfaces/register-token.interface";
+import * as randToken from 'rand-token';
+import * as crypto from 'crypto';
 
 @Component()
 export class UserService {
@@ -36,5 +39,24 @@ export class UserService {
         // createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
         const createdUser = new this.userModel(createUserDto);
         return await createdUser.save();
+    }
+}
+
+export class RegisterTokenService {
+    constructor(@Inject('RegisterTokenModelToken') private readonly registerTokenModel: Model<IRegisterToken>) {
+    }
+
+    async createRegisterToken(): Promise<IRegisterToken> {
+        const token = randToken.generator({source: crypto.randomBytes});
+        const createdToken = new this.registerTokenModel({
+            register_request_token: token.generate(16),
+            created_at: new Date()
+        });
+        return await createdToken.save();
+    }
+
+    async handleRegisterToken(registerTokenString: string): Promise<boolean> {
+        let registerToken = await this.registerTokenModel.find({register_request_token: registerTokenString}).exec();
+        return await registerToken.length > 0;
     }
 }
