@@ -5,6 +5,7 @@ import {IUser} from "../user/interfaces/user.interface";
 import {UserAuthDto} from "./dto/user-auth.dto";
 import {UserService} from "../user/user.service";
 import * as moment from "moment";
+import * as bcrypt from "bcrypt";
 import * as config from 'config';
 import {getLogger} from "log4js";
 
@@ -84,7 +85,6 @@ export class AuthService {
     }
 
     private async comparePasswords(inPwd: string, userPwd): Promise<boolean> {
-        // TODO add bcrypt to compare hashed passwords
-        return inPwd === userPwd;
+        return await bcrypt.compareSync(inPwd, userPwd);
     }
 }

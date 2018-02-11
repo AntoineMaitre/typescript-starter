@@ -7,13 +7,16 @@ import {IUser} from './interfaces/user.interface';
 import {CreateUserDto} from './dto/create-user.dto';
 import {TwitchService} from "../twitch/twitch.service";
 import {RegisterTokenService} from "../register-token/register-token.service";
+import {getLogger} from "log4js";
+import * as bcrypt from 'bcrypt';
+
+const logger = getLogger('service.user');
 
 @Component()
 export class UserService {
     constructor(@Inject('UserModelToken') private readonly userModel: Model<IUser>,
                 private readonly registerTokenService: RegisterTokenService,
-                private readonly twitchService: TwitchService
-                ) {
+                private readonly twitchService: TwitchService) {
     }
 
     async findAll(): Promise<IUser[]> {
@@ -37,19 +40,14 @@ export class UserService {
     }
 
     async create(createUserDto: CreateUserDto, state: string): Promise<IUser> {
-        console.log(state)
-        let isAuthorized = await this.registerTokenService.handleRegisterToken(state);
-        console.log('create', isAuthorized)
-        if(isAuthorized) {
-            if(createUserDto.password !== createUserDto.passwordConfirm)
+        if (await this.registerTokenService.handleRegisterToken(state)) {
+            if (createUserDto.password !== createUserDto.passwordConfirm)
                 throw new HttpException({
                     status: HttpStatus.BAD_REQUEST,
-                    error: "password and confirmPassword is not equal",
+                    error: "password and confirmPassword are not equal",
                 }, HttpStatus.BAD_REQUEST);
 
-            //TODO check already used email
-            let alreadyUsedEmail = false;
-            if(alreadyUsedEmail)
+            if (this.isAlreadyTakenEmail(createUserDto.email))
                 throw new HttpException({
                     status: HttpStatus.BAD_REQUEST,
                     error: "Email already used",
@@ -58,11 +56,17 @@ export class UserService {
             let followers, subscribers;
             followers = await this.twitchService
                 .getChannelFollowers(createUserDto.twitch_id, createUserDto.accessToken)
-                .catch(ex => { followers = undefined; console.log('exception on getChannelFollowers', ex)});
+                .catch(ex => {
+                    followers = undefined;
+                    logger.log('exception on getChannelFollowers', ex)
+                });
 
             subscribers = await this.twitchService
                 .getChannelSubscriptions(createUserDto.twitch_id, createUserDto.accessToken)
-                .catch(ex => { subscribers = undefined; console.log('exception on getChannelSubscriptions',ex)});
+                .catch(ex => {
+                    subscribers = undefined;
+                    logger.log('exception on getChannelSubscriptions', ex)
+                });
 
             const createdUser = new this.userModel({
                 twitch_id: createUserDto.twitch_id,
@@ -75,9 +79,8 @@ export class UserService {
                 username: createUserDto.username,
                 avatar: createUserDto.avatar,
                 email: createUserDto.email,
-                password: createUserDto.password,
+                password: await bcrypt.hash(createUserDto.password, 10),
                 roles: createUserDto.role,
-
                 birthDate: null,
                 phoneNumber: null,
             });
@@ -85,6 +88,9 @@ export class UserService {
         } else {
             throw new UnauthorizedException();
         }
+    }
 
+    async isAlreadyTakenEmail(email: string) {
+        await this.findByEmail(email)
     }
 }

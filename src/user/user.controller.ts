@@ -1,12 +1,15 @@
 /**
  * Created by tdoret on 15/01/2018.
  */
-import {Body, Controller, Inject, Get, HttpCode, HttpStatus, Post, Query, HttpException} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpException, HttpStatus, Post, Query} from '@nestjs/common';
 import {UserService} from './user.service';
 import {IUser} from './interfaces/user.interface';
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiUseTags} from '@nestjs/swagger';
 import {CreateUserDto} from './dto/create-user.dto';
 import {Param} from '@nestjs/common/utils/decorators/route-params.decorator';
+import {getLogger} from "log4js";
+
+const logger = getLogger('controller.user');
 
 @ApiUseTags('User')
 @Controller('user')
@@ -24,8 +27,8 @@ export class UserController {
         return await this.userService
             .create(createUserDto, state)
             .catch(ex => {
-                console.log(ex)
-                if(ex.status != HttpStatus.OK)
+                logger.log(ex);
+                if (ex.status != HttpStatus.OK)
                     throw new HttpException(ex, ex.status)
             });
     }
